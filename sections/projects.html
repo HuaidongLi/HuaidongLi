@@ -1,0 +1,60 @@
+<!-- 项目经历 -->
+<section id="projects" class="py-16 bg-dark">
+    <div class="container mx-auto px-4">
+        <h2 class="text-2xl md:text-3xl font-bold mb-10 text-center text-primary">项目经历</h2>
+        <div class="max-w-4xl mx-auto space-y-10">
+            <!-- 云享网盘 -->
+            <div class="bg-gray-800/50 p-8 rounded-xl card-hover">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
+                    <h3 class="text-xl font-semibold">云享网盘</h3>
+                    <span class="text-gray-400 mt-2 md:mt-0">2025.03 - 2025.05</span>
+                </div>
+                <div class="mb-4">
+                    <h4 class="font-medium text-primary mb-2">技术栈</h4>
+                    <p class="text-gray-300">Spring Boot、MyBatis、MySQL、Redis、RabbitMQ、FFmpeg、MinIO</p>
+                </div>
+                <div class="mb-4">
+                    <h4 class="font-medium text-primary mb-2">项目简述</h4>
+                    <p class="text-gray-300">面向个人/小型团队的文件管理系统，核心功能包括分片上传、秒传、断点续传、限流、预览、回收站、用户权限管理等</p>
+                </div>
+                <div>
+                    <h4 class="font-medium text-primary mb-2">核心贡献</h4>
+                    <ul class="list-disc list-inside space-y-1 text-gray-300">
+                        <li>通过AOP编程配合拦截器与TTL，实现登录校验、参数校验、信息传递与日志记录</li>
+                        <li>Redis缓存分片信息并校验存储空间，NIO合并大批量分片后异步MinIO转存</li>
+                        <li>自定义线程池异步处理视频缩略图、图片压缩、视频格式转换等CPU密集型任务</li>
+                        <li>采用虚拟线程实现漏桶算法，配合NIO实现高性能网络IO与单用户限流</li>
+                        <li>消息队列异步处理分享文件安全校验，集成OCR、前缀树、大模型技术实现文件安全检查</li>
+                        <li>使用延时队列实现文件到期删除，有效降低内存与CPU占用</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 编程技术论坛 -->
+            <div class="bg-gray-800/50 p-8 rounded-xl card-hover">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
+                    <h3 class="text-xl font-semibold">编程技术论坛</h3>
+                    <span class="text-gray-400 mt-2 md:mt-0">2024.09 - 2024.11</span>
+                </div>
+                <div class="mb-4">
+                    <h4 class="font-medium text-primary mb-2">技术栈</h4>
+                    <p class="text-gray-300">Spring Boot、MyBatis、MySQL、Redis、Kafka、Elasticsearch、Spring Security、MinIO、Ollama</p>
+                </div>
+                <div class="mb-4">
+                    <h4 class="font-medium text-primary mb-2">项目简述</h4>
+                    <p class="text-gray-300">技术交流平台，核心功能包括帖子发布/评论、全文检索、AI摘要、私信、热点排行</p>
+                </div>
+                <div>
+                    <h4 class="font-medium text-primary mb-2">核心贡献</h4>
+                    <ul class="list-disc list-inside space-y-1 text-gray-300">
+                        <li>使用Token+Redis优化登录凭证，通过TreadLocal与拦截器实现登录认证与授权</li>
+                        <li>采用存储层、数据层、检索层解耦设计，Kafka异步处理提交和变动，提高数据库性能</li>
+                        <li>Caffeine+Redis构建多级缓存，布隆过滤器避免缓存穿透，减轻数据库压力</li>
+                        <li>Quartz实现定时任务，计算热点分数生成排行榜，优化Redis大Key处理</li>
+                        <li>Ollama部署本地大语言模型，消息队列异步解耦，优化Prompt实现热点帖子AI摘要</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
