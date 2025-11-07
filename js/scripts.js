@@ -488,9 +488,19 @@ class NotesManager {
 
     // 显示笔记详情
     async showNoteDetail(path) {
+        console.log('尝试显示笔记详情:', path);
+        
         const modal = document.getElementById('note-modal');
         const modalTitle = document.getElementById('modal-title');
         const modalBody = document.getElementById('modal-body');
+        
+        // 确保元素都存在
+        if (!modal || !modalTitle || !modalBody) {
+            console.error('无法找到模态框元素');
+            return;
+        }
+        
+        console.log('模态框元素已找到');
         
         // 获取笔记元数据
         let metadata = noteMetadataCache.get(path) || {
@@ -498,15 +508,27 @@ class NotesManager {
         };
         
         modalTitle.textContent = metadata.title;
+        console.log('设置模态框标题:', metadata.title);
         
         // 显示加载状态
         modalBody.innerHTML = '<div class="py-8 text-center"><p class="text-gray-400">正在加载笔记内容...</p></div>';
         
-        // 显示模态框
-        modal.style.display = 'flex'; // 确保模态框是可见的
+        // 强制设置模态框样式
+        modal.style.display = 'flex';
+        modal.style.position = 'fixed';
+        modal.style.top = '0';
+        modal.style.left = '0';
+        modal.style.width = '100%';
+        modal.style.height = '100%';
+        modal.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+        modal.style.zIndex = '1000';
+        modal.style.justifyContent = 'center';
+        modal.style.alignItems = 'center';
         modal.style.opacity = '1';
         modal.style.pointerEvents = 'auto';
         document.body.style.overflow = 'hidden';
+        
+        console.log('模态框样式已设置，准备加载笔记内容');
         
         try {
             // 直接从文件路径获取笔记内容
@@ -547,6 +569,8 @@ class NotesManager {
 
     // 简单的Markdown渲染函数
     renderMarkdown(markdown) {
+        console.log('开始渲染Markdown，内容长度:', markdown.length);
+        
         // 首先转义HTML特殊字符，防止XSS攻击
         let html = markdown
             .replace(/&/g, '&amp;')
@@ -574,18 +598,68 @@ class NotesManager {
         // 行内代码
         html = html.replace(/`(.*?)`/g, '<code class="bg-gray-700 px-1 py-0.5 rounded text-sm">$1</code>');
         
-        // 列表项 - 简化的实现，确保正确处理
-        html = html.replace(/^- (.*$)/gm, '<li>$1</li>');
-        html = html.replace(/^\d+\. (.*$)/gm, '<li>$1</li>');
-        
-        // 为无序列表添加正确的包装
-        html = html.replace(/(<li>.*?<\/li>)(?=\s*(<li>|$))/gs, function(match) {
-            // 检查是否已经在ul中
-            if (!match.match(/^<ul/)) {
-                return '<ul class="my-4 list-disc pl-6">' + match + '</ul>';
+        // 改进的列表处理
+        // 先处理无序列表
+        const ulRegex = /^- (.*$)/gm;
+        if (ulRegex.test(html)) {
+            // 将连续的列表项包装在ul标签中
+            const lines = html.split('\n');
+            let result = '';
+            let inList = false;
+            
+            for (let i = 0; i < lines.length; i++) {
+                if (lines[i].match(/^- /)) {
+                    if (!inList) {
+                        result += '<ul class="my-4 list-disc pl-6">\n';
+                        inList = true;
+                    }
+                    result += '  <li class="mb-1">' + lines[i].replace(/^- /, '') + '</li>\n';
+                } else {
+                    if (inList) {
+                        result += '</ul>\n';
+                        inList = false;
+                    }
+                    result += lines[i] + '\n';
+                }
             }
-            return match;
-        });
+            
+            if (inList) {
+                result += '</ul>\n';
+            }
+            
+            html = result.trim();
+        }
+        
+        // 处理有序列表
+        const olRegex = /^\d+\. (.*$)/gm;
+        if (olRegex.test(html)) {
+            // 将连续的有序列表项包装在ol标签中
+            const lines = html.split('\n');
+            let result = '';
+            let inList = false;
+            
+            for (let i = 0; i < lines.length; i++) {
+                if (lines[i].match(/^\d+\. /)) {
+                    if (!inList) {
+                        result += '<ol class="my-4 list-decimal pl-6">\n';
+                        inList = true;
+                    }
+                    result += '  <li class="mb-1">' + lines[i].replace(/^\d+\. /, '') + '</li>\n';
+                } else {
+                    if (inList) {
+                        result += '</ol>\n';
+                        inList = false;
+                    }
+                    result += lines[i] + '\n';
+                }
+            }
+            
+            if (inList) {
+                result += '</ol>\n';
+            }
+            
+            html = result.trim();
+        }
         
         // 段落
         html = html.replace(/^(?!<h|<ul|<ol|<pre|<blockquote)(.*$)/gm, '<p class="my-2">$1</p>');
