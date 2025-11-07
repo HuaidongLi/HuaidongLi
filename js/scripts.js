@@ -39,216 +39,215 @@ window.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// 模拟文件系统结构 - 基于实际的notes文件夹结构
-const fileSystem = {
-    name: 'notes',
-    type: 'directory',
-    children: [
-        {
-            name: '.assets',
-            type: 'directory',
-            children: []
-        },
-        {
-            name: 'Elasticsearch',
+// 扫描notes目录结构的函数
+async function scanNotesDirectory(path = 'notes') {
+    try {
+        // 由于浏览器安全限制，无法直接扫描本地文件系统
+        // 这里使用预定义的目录结构，完全匹配实际的notes文件夹结构
+        const fileSystem = {
+            name: 'notes',
             type: 'directory',
             children: [
                 {
-                    name: '0_入门.md',
-                    type: 'file',
-                    path: 'notes/Elasticsearch/0_入门.md'
-                }
-            ]
-        },
-        {
-            name: 'JAVA',
-            type: 'directory',
-            children: [
-                {
-                    name: '0_入门.md',
-                    type: 'file',
-                    path: 'notes/JAVA/0_入门.md'
+                    name: '.assets',
+                    type: 'directory',
+                    children: []
                 },
                 {
-                    name: '1_集合.md',
-                    type: 'file',
-                    path: 'notes/JAVA/1_集合.md'
-                }
-            ]
-        },
-        {
-            name: 'JUC',
-            type: 'directory',
-            children: [
+                    name: 'Elasticrsearch',
+                    type: 'directory',
+                    children: [
+                        {
+                            name: '0_入门.md',
+                            type: 'file',
+                            path: 'notes/Elasticrsearch/0_入门.md'
+                        }
+                    ]
+                },
                 {
-                    name: '0_入门.md',
-                    type: 'file',
-                    path: 'notes/JUC/0_入门.md'
-                }
-            ]
-        },
-        {
-            name: 'JVM',
-            type: 'directory',
-            children: [
+                    name: 'JAVA',
+                    type: 'directory',
+                    children: [
+                        {
+                            name: '0_入门.md',
+                            type: 'file',
+                            path: 'notes/JAVA/0_入门.md'
+                        },
+                        {
+                            name: '1_集合.md',
+                            type: 'file',
+                            path: 'notes/JAVA/1_集合.md'
+                        }
+                    ]
+                },
                 {
-                    name: '0_入门.md',
-                    type: 'file',
-                    path: 'notes/JVM/0_入门.md'
-                }
-            ]
-        },
-        {
-            name: 'MQ',
-            type: 'directory',
-            children: [
+                    name: 'JUC',
+                    type: 'directory',
+                    children: [
+                        {
+                            name: '0_入门.md',
+                            type: 'file',
+                            path: 'notes/JUC/0_入门.md'
+                        }
+                    ]
+                },
                 {
-                    name: '0_入门.md',
-                    type: 'file',
-                    path: 'notes/MQ/0_入门.md'
-                }
-            ]
-        },
-        {
-            name: 'MySQL',
-            type: 'directory',
-            children: [
+                    name: 'JVM',
+                    type: 'directory',
+                    children: [
+                        {
+                            name: '0_入门.md',
+                            type: 'file',
+                            path: 'notes/JVM/0_入门.md'
+                        }
+                    ]
+                },
                 {
-                    name: '0_入门.md',
-                    type: 'file',
-                    path: 'notes/MySQL/0_入门.md'
-                }
-            ]
-        },
-        {
-            name: 'Redis',
-            type: 'directory',
-            children: [
+                    name: 'MQ',
+                    type: 'directory',
+                    children: [
+                        {
+                            name: '0_入门.md',
+                            type: 'file',
+                            path: 'notes/MQ/0_入门.md'
+                        }
+                    ]
+                },
                 {
-                    name: '0_入门.md',
-                    type: 'file',
-                    path: 'notes/Redis/0_入门.md'
-                }
-            ]
-        },
-        {
-            name: 'SpringBoot',
-            type: 'directory',
-            children: [
+                    name: 'MySQL',
+                    type: 'directory',
+                    children: [
+                        {
+                            name: '0_入门.md',
+                            type: 'file',
+                            path: 'notes/MySQL/0_入门.md'
+                        }
+                    ]
+                },
                 {
-                    name: '0_入门.md',
-                    type: 'file',
-                    path: 'notes/SpringBoot/0_入门.md'
-                }
-            ]
-        },
-        {
-            name: 'SpringCloud',
-            type: 'directory',
-            children: [
+                    name: 'Redis',
+                    type: 'directory',
+                    children: [
+                        {
+                            name: '0_入门.md',
+                            type: 'file',
+                            path: 'notes/Redis/0_入门.md'
+                        }
+                    ]
+                },
                 {
-                    name: '0_入门.md',
-                    type: 'file',
-                    path: 'notes/SpringCloud/0_入门.md'
+                    name: 'SpringBoot',
+                    type: 'directory',
+                    children: [
+                        {
+                            name: '0_入门.md',
+                            type: 'file',
+                            path: 'notes/SpringBoot/0_入门.md'
+                        }
+                    ]
+                },
+                {
+                    name: 'SpringCloud',
+                    type: 'directory',
+                    children: [
+                        {
+                            name: '0_入门.md',
+                            type: 'file',
+                            path: 'notes/SpringCloud/0_入门.md'
+                        }
+                    ]
                 }
             ]
-        }
-    ]
-};
-
-// 笔记元数据 - 存储笔记的额外信息
-const noteMetadata = {
-    'notes/Elasticsearch/0_入门.md': {
-        title: 'Elasticsearch 搜索引擎',
-        date: '2024-01-23',
-        description: '全文检索、索引、查询DSL'
-    },
-    'notes/JAVA/0_入门.md': {
-        title: 'Java 入门基础',
-        date: '2024-01-15',
-        description: 'Java语言概述、环境搭建、基本语法、面向对象编程基础'
-    },
-    'notes/JAVA/1_集合.md': {
-        title: 'Java 集合框架详解',
-        date: '2024-01-16',
-        description: 'Collection接口、List、Set、Map、迭代方式、性能对比'
-    },
-    'notes/JUC/0_入门.md': {
-        title: 'Java并发编程',
-        date: '2024-01-24',
-        description: '线程安全、锁机制、并发集合'
-    },
-    'notes/JVM/0_入门.md': {
-        title: 'JVM 内存模型',
-        date: '2024-01-17',
-        description: 'JVM内存结构、垃圾回收、类加载机制'
-    },
-    'notes/MQ/0_入门.md': {
-        title: '消息队列原理',
-        date: '2024-01-22',
-        description: '消息队列基本概念、应用场景'
-    },
-    'notes/MySQL/0_入门.md': {
-        title: 'MySQL 索引优化',
-        date: '2024-01-18',
-        description: '索引原理、查询优化、性能调优'
-    },
-    'notes/Redis/0_入门.md': {
-        title: 'Redis 数据结构',
-        date: '2024-01-19',
-        description: 'String、List、Hash、Set、Sorted Set等数据结构'
-    },
-    'notes/SpringBoot/0_入门.md': {
-        title: 'Spring Boot 基础',
-        date: '2024-01-20',
-        description: '自动配置、starters、配置管理'
-    },
-    'notes/SpringCloud/0_入门.md': {
-        title: 'Spring Cloud 微服务',
-        date: '2024-01-21',
-        description: '服务注册发现、配置中心、网关'
+        };
+        return fileSystem;
+    } catch (error) {
+        console.error('扫描目录失败:', error);
+        return null;
     }
-};
+}
 
-// 简化模拟的笔记内容，避免语法错误
-const mockNoteContents = {
-    'notes/JAVA/0_入门.md': '# Java 入门基础',
-    'notes/JAVA/1_集合.md': '# Java 集合框架详解',
-    'notes/JVM/0_入门.md': '# JVM 内存模型',
-    'notes/MySQL/0_入门.md': '# MySQL 索引优化',
-    'notes/Redis/0_入门.md': '# Redis 数据结构',
-    'notes/SpringBoot/0_入门.md': '# Spring Boot 基础',
-    'notes/SpringCloud/0_入门.md': '# Spring Cloud 微服务',
-    'notes/MQ/0_入门.md': '# 消息队列原理',
-    'notes/Elasticsearch/0_入门.md': '# Elasticsearch 搜索引擎',
-    'notes/JUC/0_入门.md': '# Java并发编程'
-};
+// 从markdown文件中提取元数据的函数
+function extractMetadataFromMarkdown(content, filename = '') {
+    // 改进的标题提取逻辑，支持各种格式的一级标题
+    let title = '';
+    
+    // 尝试匹配标准的一级标题格式
+    const titleMatch1 = content.match(/^#\s+(.*?)$/m);
+    if (titleMatch1) {
+        title = titleMatch1[1].trim();
+    } else {
+        // 尝试匹配可能有缩进的一级标题
+        const titleMatch2 = content.match(/^\s*#\s+(.*?)$/m);
+        if (titleMatch2) {
+            title = titleMatch2[1].trim();
+        } else if (content.trim()) {
+            // 如果没有找到标题，使用文件的第一行作为标题
+            const firstLine = content.trim().split('\n')[0];
+            title = firstLine.replace(/^[#*\s]+/, '').trim();
+        }
+    }
+    
+    // 如果从内容中没有提取到标题，使用文件名作为后备方案
+    if (!title && filename) {
+        // 获取文件名（不带路径和扩展名）
+        const baseName = filename.split('/').pop();
+        title = baseName.split('.').slice(0, -1).join('.');
+        // 移除可能的数字前缀和下划线（如 "0_入门" -> "入门"）
+        title = title.replace(/^\d+_/, '');
+        // 解码可能的URL编码字符
+        try {
+            title = decodeURIComponent(title);
+        } catch (e) {
+            // 如果解码失败，保持原样
+        }
+    }
+    
+    // 尝试从文件内容中提取描述信息（第一个段落）
+    const descriptionMatch = content.match(/^#.*?\n\n([^\n#].*?)(?:\n|$)/s);
+    let description = descriptionMatch ? descriptionMatch[1].trim().substring(0, 100) : '';
+    if (description.length > 97) description += '...';
+    
+    return {
+        title: title || '未命名笔记',
+        date: '未知',
+        description: description
+    };
+}
+
+// 缓存已读取的笔记元数据，避免重复读取
+const noteMetadataCache = new Map();
 
 // 笔记管理类 - 基于文件系统结构实现层级渲染
 class NotesManager {
     constructor() {
-        this.fileSystem = fileSystem;
+        this.fileSystem = null;
         this.currentPath = []; // 当前路径，用于层级导航
         this.searchQuery = '';
         this.expandedFolders = new Set(); // 记录展开的文件夹
         this.init();
     }
 
-    init() {
+    async init() {
         // 渲染文件系统结构
-        this.renderFileSystem();
+        await this.renderFileSystem();
         this.setupEventListeners();
     }
 
     // 递归渲染文件系统结构
-    renderFileSystem() {
+    async renderFileSystem() {
         const notesContainer = document.getElementById('notes-container');
         
         // 显示加载状态
         notesContainer.innerHTML = '<div class="py-12 text-center"><p class="text-gray-400">正在加载笔记结构...</p></div>';
         
-        // 模拟异步加载
-        setTimeout(() => {
+        try {
+            // 扫描notes目录结构
+            this.fileSystem = await scanNotesDirectory();
+            
+            if (!this.fileSystem) {
+                throw new Error('无法加载笔记结构');
+            }
+            
             notesContainer.innerHTML = '';
             
             // 创建层级导航栏
@@ -266,17 +265,20 @@ class NotesManager {
             fsContainer.className = 'file-system';
             
             // 递归渲染目录结构
-            this.renderDirectory(this.fileSystem, fsContainer, 0);
+            await this.renderDirectory(this.fileSystem, fsContainer, 0);
             
             notesContainer.appendChild(fsContainer);
             
             // 绑定层级导航事件
             this.bindBreadcrumbEvents();
-        }, 300);
+        } catch (error) {
+            console.error('渲染文件系统失败:', error);
+            notesContainer.innerHTML = '<div class="py-12 text-center"><p class="text-red-400">加载笔记失败，请刷新页面重试</p></div>';
+        }
     }
 
     // 递归渲染目录和文件
-    renderDirectory(directory, parentElement, level) {
+    async renderDirectory(directory, parentElement, level) {
         // 跳过隐藏文件夹
         if (directory.name.startsWith('.') && level > 0) return;
         
@@ -333,60 +335,95 @@ class NotesManager {
         });
         
         // 渲染子项目
-        sortedChildren.forEach(child => {
+        for (const child of sortedChildren) {
             if (child.type === 'directory') {
                 // 递归渲染子目录
-                this.renderDirectory(child, parentElement, level + 1);
+                await this.renderDirectory(child, parentElement, level + 1);
             } else if (child.type === 'file' && child.name.endsWith('.md')) {
                 // 渲染Markdown文件
-                this.renderFile(child, parentElement, level + 1);
+                await this.renderFile(child, parentElement, level + 1);
             }
-        });
+        }
     }
 
     // 渲染文件项
-    renderFile(file, parentElement, level) {
-        // 如果有搜索查询，检查文件名是否匹配
-        if (this.searchQuery) {
-            const query = this.searchQuery.toLowerCase();
-            const metadata = noteMetadata[file.path];
-            
-            if (!file.name.toLowerCase().includes(query) && 
-                (!metadata || !metadata.title.toLowerCase().includes(query) && 
-                !metadata.description.toLowerCase().includes(query))) {
-                return;
+    async renderFile(file, parentElement, level) {
+        try {
+            // 获取文件元数据
+            let metadata;
+            if (noteMetadataCache.has(file.path)) {
+                metadata = noteMetadataCache.get(file.path);
+            } else {
+                // 尝试从文件内容中提取元数据
+                try {
+                    const response = await fetch(file.path);
+                    if (response.ok) {
+                        const content = await response.text();
+                        metadata = extractMetadataFromMarkdown(content, file.path);
+                    } else {
+                        // 改进的文件名处理逻辑
+                        let fileName = this.getFileNameWithoutExtension(file.name);
+                        // 移除可能的数字前缀和下划线
+                        fileName = fileName.replace(/^\d+_/, '');
+                        metadata = {
+                            title: fileName || '未命名笔记',
+                            date: '未知',
+                            description: ''
+                        };
+                    }
+                } catch (error) {
+                    console.warn(`无法读取文件 ${file.path}:`, error);
+                    // 改进的文件名处理逻辑
+                    let fileName = this.getFileNameWithoutExtension(file.name);
+                    // 移除可能的数字前缀和下划线
+                    fileName = fileName.replace(/^\d+_/, '');
+                    metadata = {
+                        title: fileName || '未命名笔记',
+                        date: '未知',
+                        description: ''
+                    };
+                }
+                noteMetadataCache.set(file.path, metadata);
             }
+            
+            // 如果有搜索查询，检查文件名是否匹配
+            if (this.searchQuery) {
+                const query = this.searchQuery.toLowerCase();
+                
+                if (!file.name.toLowerCase().includes(query) && 
+                    !metadata.title.toLowerCase().includes(query) && 
+                    !metadata.description.toLowerCase().includes(query)) {
+                    return;
+                }
+            }
+            
+            const indent = level * 20;
+            const fileElement = document.createElement('div');
+            
+            fileElement.className = 'file-item p-3 bg-gray-800/50 rounded-lg mb-2 hover:bg-gray-700/50 transition-colors cursor-pointer';
+            fileElement.style.paddingLeft = `${indent}px`;
+            fileElement.dataset.path = file.path;
+            
+            fileElement.innerHTML = `
+                <div class="file-icon mr-2 text-blue-400 inline-block">
+                    <i class="fa fa-file-text-o"></i>
+                </div>
+                <div class="file-info inline-block">
+                    <h4 class="file-title text-blue-300 font-medium mb-1">${metadata.title}</h4>
+                    ${metadata.description ? `<p class="file-description text-sm text-gray-400 mb-1">${metadata.description}</p>` : ''}
+                    <p class="file-date text-xs text-gray-500">${metadata.date}</p>
+                </div>
+            `;
+            
+            parentElement.appendChild(fileElement);
+            
+            // 绑定点击事件
+            fileElement.addEventListener('click', () => {
+                this.showNoteDetail(file.path);
+            });
+        } catch (error) {
+            console.error(`渲染文件项失败 ${file.path}:`, error);
         }
-        
-        const indent = level * 20;
-        const fileElement = document.createElement('div');
-        const metadata = noteMetadata[file.path] || {
-            title: this.getFileNameWithoutExtension(file.name),
-            date: '未知',
-            description: ''
-        };
-        
-        fileElement.className = 'file-item p-3 bg-gray-800/50 rounded-lg mb-2 hover:bg-gray-700/50 transition-colors cursor-pointer';
-        fileElement.style.paddingLeft = `${indent}px`;
-        fileElement.dataset.path = file.path;
-        
-        fileElement.innerHTML = `
-            <div class="file-icon mr-2 text-blue-400 inline-block">
-                <i class="fa fa-file-text-o"></i>
-            </div>
-            <div class="file-info inline-block">
-                <h4 class="file-title text-blue-300 font-medium mb-1">${metadata.title}</h4>
-                ${metadata.description ? `<p class="file-description text-sm text-gray-400 mb-1">${metadata.description}</p>` : ''}
-                <p class="file-date text-xs text-gray-500">${metadata.date}</p>
-            </div>
-        `;
-        
-        parentElement.appendChild(fileElement);
-        
-        // 绑定点击事件
-        fileElement.addEventListener('click', () => {
-            this.showNoteDetail(file.path);
-        });
     }
 
     // 切换目录展开/折叠状态
@@ -450,13 +487,13 @@ class NotesManager {
     }
 
     // 显示笔记详情
-    showNoteDetail(path) {
+    async showNoteDetail(path) {
         const modal = document.getElementById('note-modal');
         const modalTitle = document.getElementById('modal-title');
         const modalBody = document.getElementById('modal-body');
         
         // 获取笔记元数据
-        const metadata = noteMetadata[path] || {
+        let metadata = noteMetadataCache.get(path) || {
             title: this.getFileNameWithoutExtension(path.split('/').pop())
         };
         
@@ -466,18 +503,46 @@ class NotesManager {
         modalBody.innerHTML = '<div class="py-8 text-center"><p class="text-gray-400">正在加载笔记内容...</p></div>';
         
         // 显示模态框
-        modal.classList.add('show');
+        modal.style.display = 'flex'; // 确保模态框是可见的
         modal.style.opacity = '1';
         modal.style.pointerEvents = 'auto';
         document.body.style.overflow = 'hidden';
         
-        // 模拟加载内容
-        setTimeout(() => {
-            // 获取笔记内容并渲染
-            const noteContent = mockNoteContents[path] || `# ${metadata.title}\n\n笔记内容加载中...`;
+        try {
+            // 直接从文件路径获取笔记内容
+            const response = await fetch(path);
+            
+            if (!response.ok) {
+                throw new Error(`无法加载文件: ${path}`);
+            }
+            
+            // 读取markdown内容
+            const noteContent = await response.text();
+            
+            // 如果没有元数据，尝试从内容中提取
+            if (!noteMetadataCache.has(path)) {
+                metadata = extractMetadataFromMarkdown(noteContent, path);
+                noteMetadataCache.set(path, metadata);
+                modalTitle.textContent = metadata.title;
+            }
+            
+            // 渲染markdown内容
+            console.log('渲染笔记内容:', noteContent.substring(0, 100) + '...');
             const renderedContent = this.renderMarkdown(noteContent);
-            modalBody.innerHTML = renderedContent;
-        }, 300);
+            console.log('渲染后的HTML:', renderedContent.substring(0, 200) + '...');
+            
+            // 确保modalBody元素存在
+            if (modalBody) {
+                modalBody.innerHTML = renderedContent;
+                console.log('笔记内容已成功渲染到模态框');
+            } else {
+                console.error('无法找到modal-body元素');
+            }
+            
+        } catch (error) {
+            console.error('加载笔记内容失败:', error);
+            modalBody.innerHTML = `<div class="py-8 text-center"><p class="text-red-400">无法加载笔记内容: ${error.message}</p></div>`;
+        }
     }
 
     // 简单的Markdown渲染函数
@@ -509,13 +574,18 @@ class NotesManager {
         // 行内代码
         html = html.replace(/`(.*?)`/g, '<code class="bg-gray-700 px-1 py-0.5 rounded text-sm">$1</code>');
         
-        // 列表项
-        html = html.replace(/^- (.*$)/gm, '<li class="list-disc ml-6 mb-1">$1</li>');
-        html = html.replace(/^\d\. (.*$)/gm, '<li class="list-decimal ml-6 mb-1">$1</li>');
+        // 列表项 - 简化的实现，确保正确处理
+        html = html.replace(/^- (.*$)/gm, '<li>$1</li>');
+        html = html.replace(/^\d+\. (.*$)/gm, '<li>$1</li>');
         
-        // 处理列表块
-        html = html.replace(/<li>(.*?)<\/li>/gs, '<ul class="my-4">$&</ul>');
-        html = html.replace(/<ul><\/ul>/g, '');
+        // 为无序列表添加正确的包装
+        html = html.replace(/(<li>.*?<\/li>)(?=\s*(<li>|$))/gs, function(match) {
+            // 检查是否已经在ul中
+            if (!match.match(/^<ul/)) {
+                return '<ul class="my-4 list-disc pl-6">' + match + '</ul>';
+            }
+            return match;
+        });
         
         // 段落
         html = html.replace(/^(?!<h|<ul|<ol|<pre|<blockquote)(.*$)/gm, '<p class="my-2">$1</p>');
@@ -589,5 +659,16 @@ class NotesManager {
 
 // 初始化笔记功能
 function initNotes() {
-    new NotesManager();
+    // 创建笔记管理器实例
+    const notesManager = new NotesManager();
+}
+
+// 当页面加载完成后自动初始化笔记功能
+if (typeof window !== 'undefined') {
+    if (document.readyState === 'loading') {
+        window.addEventListener('DOMContentLoaded', initNotes);
+    } else {
+        // DOM已经加载完成，直接初始化
+        initNotes();
+    }
 }
